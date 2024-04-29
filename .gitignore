@@ -5,3 +5,6 @@ settings/pycache/
 db.sqlite3
 .env
 /resource/
+apps/users/__pycache__/
+settings/__pycache__/
+deploy/__pycache__/
