@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список городов</title>
+</head>
+<body>
+    <h1>Список городов</h1>
+    <ul>
+        <form method="GET" action="{% url 'catalog:product_list' %}">
+            {{ search_form.as_p }}
+            <button type="submit">Поиск</button>
+        </form>
+
+        {% for product in products %}
+            <li>{{ product }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+{% endblock %}
