@@ -1,438 +1,171 @@
-<section class="filter none">
-  <div class="container">
-    <div class="filter__inner">
-      <form class="filter__form">
-        <div class="filter__form-price">
-          <h2 class="mini-subtitle">Цена, тг.</h2>
-          <div class="filter__range-box">
-            <div class="filter__double-range">
-              <div class="filter__slider-track"></div>
-              <input
-                type="range"
-                min="21000"
-                max="286790"
-                value="1"
-                class="filter__range-input"
-                id="price-slider-1"
-              />
-              <input
-                type="range"
-                min="21000"
-                max="286790"
-                value="286790"
-                class="filter__range-input"
-                id="price-slider-2"
-              />
-            </div>
+{% extends 'index.html' %}
 
-            <div class="filter__range-values">
-              <div class="filter__range-value">
-                <span>от</span>
-                <span class="filter__range-number" id="price-value-from"
-                  >21000</span
-                >
+{% load static %}
+
+{% block title %}Filter{% endblock %}
+
+{% block content %}
+
+<main class="main">
+
+    <section class="filter">
+        <div class="container">
+          <div class="filter__inner">
+
+            <form class="filter__form" method="get">
+              <div class="filter__form-price">
+                <h2 class="mini-subtitle">Цена, тг.</h2>
+                  <div class="filter__range-box">
+                  <div class="filter__double-range">
+                    <div class="filter__slider-track"></div>
+                    <input
+                      type="range"
+                      name="price_from"
+                      min="2100"
+                      max="50000"
+                      value="{{ price_from|default:2100 }}"
+                      class="filter__range-input"
+                      id="price-slider-1"
+                      oninput="document.getElementById('price-value-from').innerText = this.value"
+                    />
+                    <input
+                      type="range"
+                      name="price_to"
+                      min="2100"
+                      max="50000"
+                      value="{{ price_to|default:50000 }}"
+                      class="filter__range-input"
+                      id="price-slider-2"
+                      oninput="document.getElementById('price-value-to').innerText = this.value"
+                    />
+                  </div>
+
+                  <div class="filter__range-values">
+                    <div class="filter__range-value">
+                      <span>от</span>
+                      <span class="filter__range-number" id="price-value-from">{{ price_from|default:2100 }}</span>
+                    </div>
+                    <div class="filter__range-value">
+                      <span>до</span>
+                      <span class="filter__range-number" id="price-value-to">{{ price_to|default:50000 }}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="filter__range-value">
-                <span>до</span>
-                <span class="filter__range-number" id="price-value-to"
-                  >286790</span
-                >
+
+
+              <div class="filter__form-brand">
+                <h2 class="mini-subtitle">Бренд</h2>
+                <ul class="filter__form-list">
+                  {% for product in products %}
+                  <li class="filter__form-item">
+                    <input
+                      id="svarok"
+                      type="checkbox"
+                      class="filter-checkbox"
+                    /><label for="svarok" class="filter-label">{{ product.brand }}</label>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+
+              <div class="filter__form-use">
+                <h2 class="mini-subtitle">Область применения</h2>
+                <ul class="filter__form-list">
+                  <li class="filter__form-item">
+                    <input
+                      id="semiprofessional"
+                      type="checkbox"
+                      class="filter-checkbox"
+                    /><label for="semiprofessional" class="filter-label"
+                      >Полупрофессиональный</label
+                    >
+                  </li>
+                  <li class="filter__form-item">
+                    <input
+                      id="semiprofessional"
+                      type="checkbox"
+                      class="filter-checkbox"
+                    /><label for="semiprofessional" class="filter-label"
+                      >Профессиональный</label
+                    >
+                  </li>
+                </ul>
+              </div>
+
+
+              <div class="filter__form-btns">
+                <button type="submit" class="main-btn filter__show-btn">Показать</button>
+                <button type="reset" class="main-btn filter__reset-btn" onclick="window.location.href='{{ request.path }}'">
+                  Сбросить
+                </button>
+              </div>
+            </form>
+
+
+            <div class="filter__result-box">
+              <div class="cart__inner">
+                  <ul class="breadcrumbs">
+                    <li class="breadcrumbs__item">
+                      <a href="{% url 'home' %}" class="breadcrumbs__to-home">
+                        <img src="{% static '/img/icons/home.svg' %}" alt="home icon" />
+                      </a>
+                    </li>
+                    <li class="breadcrumbs__item">
+                      <a href="{% url 'view_cart' %}" class="breadcrumbs__link">Корзина</a>
+                    </li>
+                  </ul>
+              </div>
+
+
+              <div class="filter__result-render">
+              {% for product in products %}
+                <div id="product-1" class="product-card">
+                  <div class="product-card__top">
+                    <p class="product-card__code">Код: <span>{{ product.id }}</span></p>
+                    {% if product.image %}
+                      <img style="max-width: 80%; height: 160px" src="{{ product.image.url }}" alt="{{ product.name }}" class="product__image">
+                    {% endif %}
+                    <a href="{% url 'view_descr' product_id=product.id %}" class="product-card__title">{{ product.name }}</a>
+                  </div>
+                  <div class="product-card__bottom">
+                    <div class="product-card__descr">
+                      {{ product.description }}
+                    </div>
+                    <div class="product-card__status">В наличии</div>
+                    <div class="product-card__buy">
+                      <span class="product-card__current-price">{{ product.price }} тг.</span>
+                      <button class="product-card__cart-btn add_to_cart_btn" data-product-id="{{ product.id }}">
+                        <img src="{% static '/img/icons/add-to-cart.svg' %}" alt="cart button" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <div class="filter__form-brand">
-          <h2 class="mini-subtitle">Бренд</h2>
-          <ul class="filter__form-list">
-            <li class="filter__form-item">
-              <input
-                id="svarok"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="svarok" class="filter-label">Сварог</label>
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="aurora"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="aurora" class="filter-label">Aurora</label>
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="grovers"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="grovers" class="filter-label">GROVERS</label>
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="hugong"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="hugong" class="filter-label">HUGONG</label>
-            </li>
-            <li class="filter__form-item">
-              <input id="tcc" type="checkbox" class="filter-checkbox" /><label
-                for="tcc"
-                class="filter-label"
-                >ТСС</label
-              >
-            </li>
-          </ul>
-          <button class="filter__show-more">Показать еще</button>
-        </div>
+      <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            var slider1 = document.getElementById("price-slider-1");
+            var slider2 = document.getElementById("price-slider-2");
+            var valueFrom = document.getElementById("price-value-from");
+            var valueTo = document.getElementById("price-value-to");
 
-        <div class="filter__form-amperage">
-          <h2 class="mini-subtitle">Max ток, А</h2>
-          <div class="filter__range-box">
-            <div class="filter__double-range">
-              <div class="filter__slider-track"></div>
-              <input
-                type="range"
-                min="40"
-                max="160"
-                value="1"
-                class="filter__range-input"
-                id="amperage-slider-1"
-              />
-              <input
-                type="range"
-                min="40"
-                max="160"
-                value="160"
-                class="filter__range-input"
-                id="amperage-slider-2"
-              />
-            </div>
+            slider1.oninput = function() {
+              valueFrom.innerText = this.value;
+            }
+            slider2.oninput = function() {
+              valueTo.innerText = this.value;
+            }
+          });
+      </script>
 
-            <div class="filter__range-values">
-              <div class="filter__range-value">
-                <span>от</span>
-                <span class="filter__range-number" id="amperage-value-from"
-                  >40</span
-                >
-              </div>
-              <div class="filter__range-value">
-                <span>до</span>
-                <span class="filter__range-number" id="amperage-value-to"
-                  >160</span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="filter__form-thickness">
-          <h2 class="mini-subtitle">Max толщина реза, мм</h2>
-          <ul class="filter__form-list">
-            <li class="filter__form-item">
-              <input
-                id="thickness-12"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="thickness-12" class="filter-label">12</label>
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="thickness-15"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="thickness-15" class="filter-label">15</label>
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="thickness-20"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="thickness-20" class="filter-label">20</label>
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="thickness-22"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="thickness-22" class="filter-label">22</label>
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="thickness-25"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="thickness-25" class="filter-label">25</label>
-            </li>
-          </ul>
-          <button class="filter__show-more">Показать еще</button>
-        </div>
+</main>
 
-        <div class="filter__form-ignition">
-          <h2 class="mini-subtitle">Зажигание дуги</h2>
-          <ul class="filter__form-list">
-            <li class="filter__form-item">
-              <input
-                id="ignition-contactless"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="ignition-contactless" class="filter-label"
-                >HF (бесконтактный)</label
-              >
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="ignition-high-frequency"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="ignition-high-frequency" class="filter-label"
-                >Высокочастотное (HF)</label
-              >
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="ignition-lift"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="ignition-lift" class="filter-label"
-                >Lift (контактный)</label
-              >
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="ignition-self-start"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="ignition-self-start" class="filter-label"
-                >Бесконтактное (self start)</label
-              >
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="ignition-hf-all"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="ignition-hf-all" class="filter-label"
-                >HF (бесконтактный) и контактный</label
-              >
-            </li>
-          </ul>
-          <button class="filter__show-more">Показать еще</button>
-        </div>
-
-        <div class="filter__form-use">
-          <h2 class="mini-subtitle">Область применения</h2>
-          <ul class="filter__form-list">
-            <li class="filter__form-item">
-              <input
-                id="semiprofessional"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="semiprofessional" class="filter-label"
-                >Полупрофессиональный</label
-              >
-            </li>
-            <li class="filter__form-item">
-              <input
-                id="professional"
-                type="checkbox"
-                class="filter-checkbox"
-              /><label for="professional" class="filter-label"
-                >Профессиональный</label
-              >
-            </li>
-          </ul>
-        </div>
-
-        <div class="filter__form-btns">
-          <button class="main-btn filter__show-btn">Показать</button
-          ><button type="reset" class="main-btn filter__reset-btn">
-            Сбросить
-          </button>
-        </div>
-      </form>
-
-      <div class="filter__result-box">
-        <div class="filter__sorting">
-          <p class="filter__sorting-text">Сортировать по:</p>
-          <button
-            id="sort-price"
-            class="filter__sorting-btn filter__sorting-btn--active"
-          >
-            Цена
-            <svg
-              width="7"
-              height="4"
-              viewBox="0 0 7 4"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M0.395117 2.4762L2.43131 0.440013C2.61134 0.260041 2.85544 0.158939 3.11 0.158939C3.36456 0.158939 3.60866 0.260041 3.78869 0.440013L5.82488 2.4762C6.00486 2.65623 6.10596 2.90034 6.10596 3.1549C6.10596 3.40945 6.00486 3.65356 5.82488 3.83359H0.395117C0.215145 3.65356 0.114043 3.40945 0.114043 3.1549C0.114043 2.90034 0.215145 2.65623 0.395117 2.4762Z"
-                fill="#17141E"
-              />
-            </svg></button
-          ><button id="sort-name" class="filter__sorting-btn">Название</button>
-        </div>
-        <div class="filter__result-render">
-          <div id="product-1" class="product-card">
-  <div class="product-card__top">
-    <p class="product-card__code">Код: <span>0022167</span></p>
-    <img
-      src="./img/products/product-2.jpg"
-      alt="product"
-      class="product-card__img"
-    />
-    <h3 class="product-card__title">Проволока сварочная ОК</h3>
-  </div>
-  <div class="product-card__bottom">
-    <div class="product-card__descr">
-      Вес, кг: 18 <br />
-      Вид проволоки: омедненная <br />
-      Диаметр, мм: 1.2
-    </div>
-    <div class="product-card__status">В наличии</div>
-    <div class="product-card__buy">
-      <span class="product-card__current-price">2190тг.</span>
-      <button class="product-card__cart-btn">
-        <img src="./img/icons/add-to-cart.svg" alt="cart button" />
-      </button>
-    </div>
-  </div>
-</div>
-
-          <div id="product-1" class="product-card">
-  <div class="product-card__top">
-    <p class="product-card__code">Код: <span>0022167</span></p>
-    <img
-      src="./img/products/product-2.jpg"
-      alt="product"
-      class="product-card__img"
-    />
-    <h3 class="product-card__title">Проволока сварочная ОК</h3>
-  </div>
-  <div class="product-card__bottom">
-    <div class="product-card__descr">
-      Вес, кг: 18 <br />
-      Вид проволоки: омедненная <br />
-      Диаметр, мм: 1.2
-    </div>
-    <div class="product-card__status">В наличии</div>
-    <div class="product-card__buy">
-      <span class="product-card__current-price">2190тг.</span>
-      <button class="product-card__cart-btn">
-        <img src="./img/icons/add-to-cart.svg" alt="cart button" />
-      </button>
-    </div>
-  </div>
-</div>
-
-          <div id="product-1" class="product-card">
-  <div class="product-card__top">
-    <p class="product-card__code">Код: <span>0022167</span></p>
-    <img
-      src="./img/products/product-2.jpg"
-      alt="product"
-      class="product-card__img"
-    />
-    <h3 class="product-card__title">Проволока сварочная ОК</h3>
-  </div>
-  <div class="product-card__bottom">
-    <div class="product-card__descr">
-      Вес, кг: 18 <br />
-      Вид проволоки: омедненная <br />
-      Диаметр, мм: 1.2
-    </div>
-    <div class="product-card__status">В наличии</div>
-    <div class="product-card__buy">
-      <span class="product-card__current-price">2190тг.</span>
-      <button class="product-card__cart-btn">
-        <img src="./img/icons/add-to-cart.svg" alt="cart button" />
-      </button>
-    </div>
-  </div>
-</div>
-
-          <div id="product-1" class="product-card">
-  <div class="product-card__top">
-    <p class="product-card__code">Код: <span>0022167</span></p>
-    <img
-      src="./img/products/product-2.jpg"
-      alt="product"
-      class="product-card__img"
-    />
-    <h3 class="product-card__title">Проволока сварочная ОК</h3>
-  </div>
-  <div class="product-card__bottom">
-    <div class="product-card__descr">
-      Вес, кг: 18 <br />
-      Вид проволоки: омедненная <br />
-      Диаметр, мм: 1.2
-    </div>
-    <div class="product-card__status">В наличии</div>
-    <div class="product-card__buy">
-      <span class="product-card__current-price">2190тг.</span>
-      <button class="product-card__cart-btn">
-        <img src="./img/icons/add-to-cart.svg" alt="cart button" />
-      </button>
-    </div>
-  </div>
-</div>
-
-          <div id="product-1" class="product-card">
-  <div class="product-card__top">
-    <p class="product-card__code">Код: <span>0022167</span></p>
-    <img
-      src="./img/products/product-2.jpg"
-      alt="product"
-      class="product-card__img"
-    />
-    <h3 class="product-card__title">Проволока сварочная ОК</h3>
-  </div>
-  <div class="product-card__bottom">
-    <div class="product-card__descr">
-      Вес, кг: 18 <br />
-      Вид проволоки: омедненная <br />
-      Диаметр, мм: 1.2
-    </div>
-    <div class="product-card__status">В наличии</div>
-    <div class="product-card__buy">
-      <span class="product-card__current-price">2190тг.</span>
-      <button class="product-card__cart-btn">
-        <img src="./img/icons/add-to-cart.svg" alt="cart button" />
-      </button>
-    </div>
-  </div>
-</div>
-
-          <div id="product-1" class="product-card">
-  <div class="product-card__top">
-    <p class="product-card__code">Код: <span>0022167</span></p>
-    <img
-      src="./img/products/product-2.jpg"
-      alt="product"
-      class="product-card__img"
-    />
-    <h3 class="product-card__title">Проволока сварочная ОК</h3>
-  </div>
-  <div class="product-card__bottom">
-    <div class="product-card__descr">
-      Вес, кг: 18 <br />
-      Вид проволоки: омедненная <br />
-      Диаметр, мм: 1.2
-    </div>
-    <div class="product-card__status">В наличии</div>
-    <div class="product-card__buy">
-      <span class="product-card__current-price">2190тг.</span>
-      <button class="product-card__cart-btn">
-        <img src="./img/icons/add-to-cart.svg" alt="cart button" />
-      </button>
-    </div>
-  </div>
-</div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+{% endblock %}

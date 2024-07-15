@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, City, Product, Categories
+from .models import CustomUser, City, Product, Categories, Cart, ScopeApplication, Brand
 
 
 class CustomUserAdmin(admin.ModelAdmin):
@@ -12,4 +12,7 @@ admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(City)
 admin.site.register(Product)
 admin.site.register(Categories)
+admin.site.register(Cart)
+admin.site.register(ScopeApplication)
+admin.site.register(Brand)
 

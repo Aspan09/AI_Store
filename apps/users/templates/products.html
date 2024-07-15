@@ -17,6 +17,7 @@
 <body>
     <h1>Список городов</h1>
     <ul>
+
         <form method="GET" action="{% url 'catalog:product_list' %}">
             {{ search_form.as_p }}
             <button type="submit">Поиск</button>

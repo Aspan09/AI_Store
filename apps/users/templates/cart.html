@@ -1,146 +1,159 @@
-<div class="cart none">
-  <div class="container">
-    <div class="cart__inner">
-      <ul class="breadcrumbs">
-        <li class="breadcrumbs__item">
-          <a href="#!" class="breadcrumbs__to-home">
-            <img src="./img/icons/home.svg" alt="home icon" />
-          </a>
-        </li>
-        <li class="breadcrumbs__item">
-          <a href="#!" class="breadcrumbs__link">Корзина</a>
-        </li>
-      </ul>
+{% extends 'index.html' %}
 
-      <div class="cart__top">
-        <h1 class="subtitle cart__title">Корзина<span></span></h1>
-        <div class="cart__progress">
-          <p class="cart__progress-formation">Формирование заказа</p>
-          <p class="cart__progress-placing">Оформление заказа</p>
+{% load static %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+<main class="main">
+    <div class="cart">
+        <div class="container">
+            <div class="cart__inner">
+                <ul class="breadcrumbs">
+                    <li class="breadcrumbs__item">
+                        <a href="{% url 'home' %}" class="breadcrumbs__to-home">
+                            <img src="{% static '/img/icons/home.svg' %}" alt="home icon" />
+                        </a>
+                    </li>
+                    <li class="breadcrumbs__item">
+                        <a href="{% url 'view_cart' %}" class="breadcrumbs__link">Корзина</a>
+                    </li>
+                </ul>
+
+                <div class="cart__top">
+                    <h1 class="subtitle cart__title">Корзина<span></span></h1>
+                    <div class="cart__progress">
+                        <p class="cart__progress-formation">Формирование заказа</p>
+                    </div>
+                </div>
+
+                <div class="cart__body">
+                    <ul class="cart__descr-list">
+                        <li class="cart__descr-item cart__descr-item--1"><span>Название</span></li>
+                        <li class="cart__descr-item cart__descr-item--2"><span>В корзине</span></li>
+                        <li class="cart__descr-item cart__descr-item--3"><span>Без скидки</span></li>
+                        <li class="cart__descr-item cart__descr-item--4"><span>Цена</span></li>
+                        <li class="cart__descr-item cart__descr-item--5"><span>За упаковку</span></li>
+                        <li class="cart__descr-item cart__descr-item--6"><span>Сумма</span></li>
+                    </ul>
+
+                    <ul class="cart__list">
+                        {% for item in cart_items %}
+                        <li id="cart-item-{{ item.id }}" class="cart__item" data-cart-id="{{ item.id }}">
+                            <div class="cart__item-head">
+                                {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="product image" class="cart__item-img">
+                                {% endif %}
+                                <p class="cart__item-text"><span>Код: </span>{{ item.product.id }}</p>
+                            </div>
+                            <p class="cart__item-name">{{ item.product.name }}</p>
+                            <div class="cart__item-counter">
+                                <div class="cart__item-quant">{{ item.quantity }}</div>
+                            </div>
+                            <p class="cart__item-price-box">
+                                <span class="cart__item-price">{{ item.product.price }}</span>
+                                <span class="cart__item-price-currency">тг</span>
+                                <span>/ шт</span>
+                            </p>
+                            <button class="cart__item-btn">
+                                <img src="{% static '/img/icons/remove.svg' %}" alt="remove cart item" />
+                            </button>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                </div>
+
+                <div class="cart__total">
+                    <div class="cart__total-head">
+                        <div class="cart__total-info">
+                            <span class="cart__total-text">Итого:</span>
+                            <p class="cart__price-box">
+                                <span id="total-price__final">{{ final_price }}</span>
+                                <span class="cart__total-currency">тг</span>
+                            </p>
+                        </div>
+                        <a href="{% url 'register' %}" class="cart__total-registry">зарегистрироваться</a>
+                    </div>
+                    <button class="main-btn">Оформить заказ</button>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="cart__body">
-        <ul class="cart__descr-list">
-          <li class="cart__descr-item cart__descr-item--1">
-            <span>Название</span>
-          </li>
-          <li class="cart__descr-item cart__descr-item--2">
-            <span>В корзине</span>
-          </li>
-          <li class="cart__descr-item cart__descr-item--3">
-            <span>Без скидки</span>
-          </li>
-          <li class="cart__descr-item cart__descr-item--4">
-            <span>Цена</span>
-          </li>
-          <li class="cart__descr-item cart__descr-item--5">
-            <span>За упаковку</span>
-          </li>
-          <li class="cart__descr-item cart__descr-item--6">
-            <span>Сумма</span>
-          </li>
-        </ul>
-        <ul class="cart__list">
-          <li id="cart-item-1" class="cart__item">
-  <div class="cart__item-head">
-    <img
-      src="./img/other/cart-product-1.jpg"
-      alt="product icon"
-      class="cart__item-img"
-    />
-    <p class="cart__item-text"><span>Код: </span>0039279</p>
-  </div>
-  <p class="cart__item-name">Пруток присадочный омедненный</p>
-  <div class="cart__item-counter">
-    <button class="cart__item-minus">
-      <img src="./img/icons/small-minus.svg" alt="minus icon" />
-    </button>
-    <div class="cart__item-quant">3</div>
-    <button class="cart__item-plus">
-      <img src="./img/icons/small-plus.svg" alt="plus icon" />
-    </button>
-  </div>
-
-  <p class="cart__item-no-discount">
-    <span class="cart__item-no-discount-text">50</span>
-    <span class="cart__item-no-discount-currency">тг</span>
-    <span>/ шт</span>
-  </p>
-  <p class="cart__item-price-box">
-    <span class="cart__item-price">50</span>
-    <span class="cart__item-price-currency">тг</span>
-    <span>/ шт</span>
-  </p>
-  <p class="cart__item-pack-price">-</p>
-  <p class="cart__item-sum-box">
-    <span class="cart__item-sum">150</span>
-    <span>тг</span>
-  </p>
-
-  <button class="cart__item-btn">
-    <img src="./img/icons/remove.svg" alt="remove cart item" />
-  </button>
-</li>
-
-          <li id="cart-item-1" class="cart__item">
-  <div class="cart__item-head">
-    <img
-      src="./img/other/cart-product-1.jpg"
-      alt="product icon"
-      class="cart__item-img"
-    />
-    <p class="cart__item-text"><span>Код: </span>0039279</p>
-  </div>
-  <p class="cart__item-name">Пруток присадочный омедненный</p>
-  <div class="cart__item-counter">
-    <button class="cart__item-minus">
-      <img src="./img/icons/small-minus.svg" alt="minus icon" />
-    </button>
-    <div class="cart__item-quant">3</div>
-    <button class="cart__item-plus">
-      <img src="./img/icons/small-plus.svg" alt="plus icon" />
-    </button>
-  </div>
-
-  <p class="cart__item-no-discount">
-    <span class="cart__item-no-discount-text">50</span>
-    <span class="cart__item-no-discount-currency">тг</span>
-    <span>/ шт</span>
-  </p>
-  <p class="cart__item-price-box">
-    <span class="cart__item-price">50</span>
-    <span class="cart__item-price-currency">тг</span>
-    <span>/ шт</span>
-  </p>
-  <p class="cart__item-pack-price">-</p>
-  <p class="cart__item-sum-box">
-    <span class="cart__item-sum">150</span>
-    <span>тг</span>
-  </p>
-
-  <button class="cart__item-btn">
-    <img src="./img/icons/remove.svg" alt="remove cart item" />
-  </button>
-</li>
-
-        </ul>
-      </div>
-
-      <div class="cart__total">
-        <div class="cart__total-head">
-          <div class="cart__total-info">
-            <span class="cart__total-text">Итого:</span>
-            <p class="cart__price-box">
-              <span class="cart__total-price">150</span>
-              <span class="cart__total-currency">тг</span>
-            </p>
-          </div>
-          <a href="#!" class="cart__total-registry">зарегистрироваться</a>
-        </div>
-
-        <button class="main-btn">Оформить заказ</button>
-      </div>
     </div>
-  </div>
-</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем кнопку по классу
+            const orderButton = document.querySelector('.main-btn');
+
+            // Добавляем обработчик события click
+            orderButton.addEventListener('click', function() {
+                // Выводим сообщение
+                alert('Ваш заказ успешно обработан');
+            });
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function parsePrice(price) {
+                // Replace any comma with an empty string and convert to float
+                return parseFloat(price.replace(/\./g, '').replace(',', '.'));
+            }
+
+            function formatPrice(price) {
+                // Format price to include commas as thousands separators and two decimal points
+                return price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.').replace('.', ',');
+            }
+
+            function updateTotalPrice() {
+                let totalPrice = 0;
+                const cartItems = document.querySelectorAll('.cart__item');
+                cartItems.forEach(item => {
+                    const price = parsePrice(item.querySelector('.cart__item-price').textContent);
+                    const quantity = parseInt(item.querySelector('.cart__item-quant').textContent);
+                    totalPrice += price * quantity;
+                });
+                document.getElementById('total-price__final').textContent = formatPrice(totalPrice);
+            }
+
+            const removeCartItemBtns = document.querySelectorAll('.cart__item-btn');
+            removeCartItemBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const cartItem = e.target.closest('.cart__item');
+                    const cartItemId = cartItem.dataset.cartId;
+                    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/remove/' + cartItemId + '/');
+                    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                    xhr.setRequestHeader('X-CSRFToken', csrfToken);
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            const data = JSON.parse(xhr.responseText);
+                            if (data.success) {
+                                // Remove the cart item from the DOM
+                                cartItem.remove();
+                                // Update the total price
+                                updateTotalPrice();
+                            } else {
+                            }
+                        } else {
+                            console.error(xhr.status + ': ' + xhr.responseText);
+                        }
+                    };
+                    xhr.onerror = function() {
+                        console.error(xhr.status + ': ' + xhr.responseText);
+                    };
+                    xhr.send();
+                    updateTotalPrice();
+                });
+            });
+            // Initial total price update
+        });
+    </script>
+</main>
+{% endblock %}

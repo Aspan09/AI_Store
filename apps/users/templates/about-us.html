@@ -1,0 +1,125 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+
+
+    <main class="main">
+
+        <section class="about-us">
+          <div class="container">
+
+            <ul class="breadcrumbs" style="margin-top: 25px">
+            <li class="breadcrumbs__item">
+              <a href="{% url 'home' %}" class="breadcrumbs__to-home">
+                <img src="{% static '/img/icons/home.svg' %}" alt="home icon" />
+              </a>
+            </li>
+            <li class="breadcrumbs__item">
+              <a href="{% url 'view_cart' %}" class="breadcrumbs__link">Корзина</a>
+            </li>
+
+          </ul>
+            <h1 class="about-us__title" style="margin-top: 40px;">О нас</h1>
+            <div class="about-us__inner">
+              <div class="about-us__block">
+                <div class="about-us__text">
+                  <p>
+                    Компания - 20 лет качества, высокого сервиса и более 14 000
+                    довольных клиентов.
+                  </p>
+                  <p>
+                    В наших офисах самый широкий выбор  сварочных материалов и
+                    оборудования, абразивов и спецодежды, инструмента и комплектующих.
+                    Менеджеры проконсультируют вас о товарах и их наличии, помогут
+                    оформить покупку и организуют быструю доставку.
+                  </p>
+                  <p>
+                    На сайте Вы можете самостоятельно выбрать товар из каталога и
+                    оформить заказ.
+                  </p>
+                </div>
+                <div class="about-us__pros">
+                  <div class="about-us__pro">
+                    <img
+                      src="{% static '/img/icons/sales.svg' %}"
+                      alt="sales icon"
+                      class="about-us__pro-img"
+                    />
+                    <p class="about-us__pro-text about-us__pro-text--first">
+                      Зарегистрируйтесь в личном кабинете и получите
+                      <strong>скидку 0%</strong>
+                      на всю продукцию
+                      <a href="#!" class="about-us__pro-link">Зарегистрироваться</a>
+                    </p>
+                  </div>
+
+                  <div class="about-us__pro">
+                    <img
+                      src="{% static '/img/icons/delivery.svg' %}"
+                      alt="delivery icon"
+                      class="about-us__pro-img"
+                    />
+                    <p class="about-us__pro-text about-us__pro-text--second">
+                      <strong
+                        >Бесплатная доставка до ТК, до склада или в черте
+                        города:</strong
+                      >
+                      Алмата, Караганда, Актобе
+                    </p>
+                  </div>
+
+                  <div class="about-us__pro">
+                    <img
+                      src="{% static '/img/icons/sales.svg' %}"
+                      alt="sales icon"
+                      class="about-us__pro-img"
+                    />
+                    <p class="about-us__pro-text">
+                      <strong>Удобный</strong> личный кабинет с историей заказов
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="advantages">
+                <h2 class="subtitle">Наши преимущества<span></span></h2>
+                <div class="advantages__text">
+                  <p>
+                    Сохраняем минимальные цены без ущерба качеству - поставка товара
+                    напрямую от производителя
+                  </p>
+                  <p>
+                    Гибкая система скидок - выгодное приобретение товара в зависимости
+                    от объема заказа
+                  </p>
+                  <p>
+                    Широкий ассортимент продукции - склады с наличием более 5000
+                    наименований товаров
+                  </p>
+                  <p>
+                    Свой сервисный центр - предоставляем постгарантийное обслуживание
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <img
+            class="about-us__pseudo-bg--first"
+            src="{% static '/img/other/pseudo-bg.jpg' %}"
+            alt="pseudo background"
+          />
+          <img
+            class="about-us__pseudo-bg--second"
+            src="{% static '/img/other/pseudo-bg-2.jpg' %}"
+            alt="pseudo background"
+          />
+        </section>
+
+    </main>
+
+{% endblock %}

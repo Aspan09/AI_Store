@@ -1,0 +1,29 @@
+.login-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100px;
+    height: 30px;
+    padding: 0 8px;
+
+    border: 2px solid rgb(44, 40, 53);
+    border-radius: 4px;
+
+    font-family: $fontAccent;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
+
+    transition: all .2s ease-in;
+
+    &:hover{
+        color: $colorWhite;
+        background-color: $colorBlack;
+    }
+
+    @include tablet-s(){
+        display: none;
+    }
+}

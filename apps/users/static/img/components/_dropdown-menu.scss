@@ -1,0 +1,96 @@
+.dropdown-menu__btn{
+    position: relative;
+    width: 274px;
+    height: 45px;
+    padding: 12px 40px 12px 60px;       
+    border-radius: 15px;
+    background: $redGradient;
+
+    color: $colorWhite;
+    font-family: $fontAccent;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-align: left;
+    text-transform: uppercase;
+
+    span, span::before, span::after{
+        display: block;
+        position: absolute;
+        height: 1px;
+        width: 18px;
+        background-color: $colorTextMain;
+    }
+
+    span{
+        left: 19px;
+        top: 24px;
+
+        &::before{
+            content: "";
+            top: 6px;
+        }
+
+        &::after{
+            content: "";
+            top: -6px;
+        }
+    }
+
+    @include tablet-s(){
+        display: none;
+    }
+}
+
+.dropdown-menu__list{
+    display: none;
+    position: absolute;
+    z-index: 995;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 549px;
+    height: 490px;
+    box-shadow: 0px 5px 25px 0px rgba(51, 51, 63, 0.05);
+    background-color: $colorWhite;
+}
+
+.dropdown-menu__list--active{
+    display: flex;
+}
+
+.dropdown-menu__item{
+    width: 274px;
+    border-right: 0.80px solid $colorGray400;
+}
+
+.dropdown-menu__link{
+    display: block;
+    padding: 6px 0 6px 16px;
+
+    font-family: $fontAccent;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.3px;
+
+    transition: all .1s ease-in;
+    position: relative;
+
+    &:hover{
+        color: $colorRed;
+        background-color: $colorWhite600;
+    }
+
+    &:hover:after{
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 17px;
+        width: 6px;
+        height: 10px;
+        background-image: url(../img/icons/more-link-mini.svg);
+        background-repeat: no-repeat;
+    }
+    
+}

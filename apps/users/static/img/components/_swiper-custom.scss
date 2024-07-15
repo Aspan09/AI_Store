@@ -1,0 +1,45 @@
+.swiper-prev-btn, .swiper-next-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    z-index: 20;
+    width: 20px;
+    height: 50px;
+    
+    border: 1px solid #000;
+    border-radius: 4px;
+}
+
+.swiper-prev-btn{
+    left: 0;
+    transform: translateY(-510%);
+
+    @include tablet-s(){
+        display: none;
+    }
+}
+
+.swiper-next-btn{
+    right: 0;
+    transform: translateY(-510%);
+
+    @include tablet-s(){
+        display: none;
+    }
+}
+
+.outer-box{
+    padding: 0 15px;
+    position: relative;
+
+    @include tablet(){
+        margin: 0 15px;
+    }
+
+    @include tablet-s(){
+        padding: 0;
+    }
+
+}

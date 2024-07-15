@@ -1,0 +1,36 @@
+.tabs {
+    display: flex;
+    flex-direction: column;
+
+    @include width770(){
+        display: none;
+    }
+}
+
+.tabs__btn {
+    width: 290px;
+    padding: 6px 100px 6px 15px;
+
+    text-align: left;
+    font-family: $fontAccent;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 133%;
+    transition: all .2s ease-in;
+
+    @include tablet(){
+        width: 230px;
+        padding: 8px 40px 8px 15px;
+    }
+
+    @include width900(){
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+}
+
+.tabs__btn--active, .tabs__btn:hover{
+    color: $colorRed;
+    background-color: $colorWhite600;
+}

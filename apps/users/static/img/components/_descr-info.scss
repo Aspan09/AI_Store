@@ -1,0 +1,256 @@
+.descr-info{
+    @include width710(){
+        position: relative;
+    }
+}
+
+.descr-info__switcher {
+    display: none;
+
+    @include width710(){
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 23px;
+    }
+
+    @include width470(){
+        padding: 0 10px;
+    }
+}
+
+.descr-info__switcher-text {
+    font-family: $fontAccent;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 133%;
+}
+
+.descr-info__switcher-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 25px;
+    height: 25px;
+}
+
+.descr-tabs{
+    display: flex;
+
+    &--flex{
+        display: flex;
+    }
+
+    @include width710(){
+        flex-direction: column;
+
+        position: absolute;
+        z-index: 990;
+        width: 100%;
+
+        background-color: $colorWhite;
+    }
+}
+
+.descr-tabs__btn{
+    max-width: 256px;
+    padding: 10px 20px 10px 30px;
+
+    font-family: $fontAccent;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+
+    transition: all .2s ease-in;
+
+    &--active{
+        color: $colorRed;
+        background-color: $colorWhite;
+        border-radius: 3px 3px 0 0;
+    }
+
+    &:hover{
+        color: $colorRed;
+        background-color: $colorWhite;
+        border-radius: 3px 3px 0 0;
+    }
+
+    @include width900(){
+        padding: 10px 25px;
+        font-size: 15px;
+    }
+
+    @include width710(){
+        max-width: 100%;
+        padding: 25px 15px;
+        font-size: 20px;
+
+        &:hover{
+            background-color: darken($colorWhite, 2%);
+        }
+    }
+
+    @include mobile-x(){
+        padding: 20px 15px;
+        font-size: 16px;
+    }
+}
+
+.descr-info__inner{
+    padding: 45px 30px 30px;
+    
+    border-radius: 3px;
+    background-color: $colorWhite;
+
+    @include width900(){
+        padding: 25px 15px 20px;
+    }
+
+    @include width470(){
+        padding: 25px 0px 20px;
+    }
+}
+
+.descr-info__list{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    gap: 0 20px;
+    height: 270px;
+
+    @include width1200(){
+        height: 300px;
+    }
+
+    @include tablet(){
+        gap: 0;
+    }
+
+    @include width710(){
+        flex-wrap: nowrap;
+        height: auto;
+        margin-bottom: 20px;
+    }
+}
+
+.descr-info__item{
+    display: flex;
+    align-items: center;
+
+    width: 535px;
+    padding: 15px 13px;
+
+    &:nth-child(1){
+        background-color: $colorWhite600;
+    }
+
+    &:nth-child(3){
+        background-color: $colorWhite600;
+    }
+
+    &:nth-child(5){
+        background-color: $colorWhite600;
+    }
+
+    &:nth-child(6){
+        background-color: $colorWhite600;
+    }
+
+    &:nth-child(8){
+        background-color: $colorWhite600;
+    }
+
+    &:nth-child(10){
+        background-color: $colorWhite600;
+    }
+
+    @include width1200(){
+        justify-content: space-between; 
+        width: 405px;
+        margin: 0 auto;
+    }
+
+    @include width900(){
+        width: 305px;
+    }
+
+    @include width710(){
+        width: 100%;
+
+        &:nth-child(even){
+            background-color: $colorWhite;
+        }
+
+        &:nth-child(odd){
+            background-color: $colorWhite600;
+        }
+    }
+}
+
+.descr-info__key{
+    width: 270px;
+    font-weight: 700;
+    line-height: 150%;
+
+    @include width1200(){
+        width: auto;
+    }
+}
+
+.descr-info__value{
+    font-weight: 400;
+    line-height: 171%;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    color: $colorBlue;
+
+    @include mobile-x(){
+        text-align: right;
+    }
+}
+
+.descr-info__text{
+    display: flex;
+    flex-direction: column;
+    gap: 20px 0;
+
+    margin-top: 27px;
+
+    font-weight: 400;
+    line-height: 171%;
+    color: #171717;
+
+    @include tablet(){
+        margin-top: 0px;
+    }
+
+    @include width470(){
+        padding: 0 10px;
+    }
+
+    &--3{
+        display: flex;
+        flex-direction: column;
+        gap: 12px 0;
+
+        padding-left: 18px;
+    }
+}
+
+.descr-info__disclaimer{
+    margin-top: 45px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 143%;
+    color: #2c2932;
+
+    @include tablet(){
+        margin-top: 25px;
+    }
+
+    @include width470(){
+        padding: 0 30px;
+    }
+}

@@ -10,28 +10,34 @@
 
     <div class="main-form login login--active">
       <div class="main-form__inner">
+
         <h2 class="main-form__title">Вход</h2>
+
         <form action="{% url 'login' %}" method="post" name="loginForm" class="main-form__form">
           {% csrf_token %}
           {{ form.non_field_errors }}
           <label for="login-email" class="main-form__label">Логин: Электронная почта
             <input id="login-email" type="email" name="email" class="main-form__input" value="{{ form.email }}" required/>
           </label>
+
           <label for="login-password" class="main-form__label">Пароль
-            <input id="login-password" type="password" name="password" class="main-form__input" value="{{ form.password }}
+            <input id="login-password" type="password" name="password" class="main-form__input" value="{{ form.password }}">
           </label>
 
           <div class="login__signin-box">
             <button class="main-btn login__btn" type="submit">Войти</button>
             <a href="#!" class="login__link">Забыли пароль?</a>
           </div>
+
+
           <p class="main-form__signin-text">Еще не зарегистрированы?
             <a href="{% url 'register' %}" class="main-form__signin-link login__toregistry-link">Регистрация</a>
           </p>
+
         </form>
       </div>
     </div>
 
-        </main>
+    </main>
 
 {% endblock %}

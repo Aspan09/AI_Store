@@ -77,6 +77,28 @@ class Categories(models.Model):
         verbose_name_plural = 'Категории'
 
 
+class ScopeApplication(models.Model):
+    name_scope = models.CharField(verbose_name='Область применения', max_length=150, blank=True, null=True)
+
+    def __str__(self):
+        return self.name_scope
+
+    class Meta:
+        verbose_name = 'Область применения'
+        verbose_name_plural = 'Областя применения'
+
+
+class Brand(models.Model):
+    name_brand = models.CharField(verbose_name='Бренд', max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.name_brand
+
+    class Meta:
+        verbose_name = 'Бренд'
+        verbose_name_plural = 'Бренды'
+
+
 class Product(models.Model):
 
     name = models.CharField(max_length=150, unique=True, verbose_name='Название')
@@ -87,6 +109,10 @@ class Product(models.Model):
     discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Скидка в %')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Количество')
     category = models.ForeignKey(to=Categories, on_delete=models.CASCADE, verbose_name='Категория')
+    brand = models.ForeignKey(to=Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд',)
+    scope_of_application = models.ForeignKey(to=ScopeApplication, on_delete=models.CASCADE,
+                                             verbose_name='Область применения', blank=True, null=True)
+    video_url = models.CharField(verbose_name='Видео url с youtube', max_length=300, blank=True, null=True)
 
     class Meta:
         db_table = 'product'
@@ -108,4 +134,17 @@ class Product(models.Model):
             return round(self.price - self.price * self.discount / 100, 2)
 
         return self.price
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f'Пользователь: {self.user}, Продукт: {self.product}, Количество: {self.quantity}'
+
+    class Meta:
+        verbose_name = 'Корзина'
+        verbose_name_plural = 'Корзины'
 
